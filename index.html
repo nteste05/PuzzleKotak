@@ -49,7 +49,7 @@
         <button id="resetBtn" class="btn-small" onclick="loadLevel()">Reset Level</button>
         <button id="restartBtn" class="btn-small" onclick="fullRestart()">Restart Game</button>
     </div>
-    <span id="status">Menunggu...</span>
+    <span id="status">Siap Bermain</span>
 </div>
 
 <canvas id="puzzleCanvas"></canvas>
@@ -73,6 +73,7 @@ let rows, cols;
 let pieces = [];
 let selectedPiece = null;
 let offset = { x: 0, y: 0 };
+let isLoading = false;
 
 function setGridConfig() {
     let lv = currentLevel + 1;
@@ -82,18 +83,31 @@ function setGridConfig() {
     else { rows = 9; cols = 6; }
 }
 
-// FUNGSI LOAD DENGAN PROGRESS
+// Fungsi Menggambar Progress di Tengah Canvas
+function drawLoadingScreen(txt) {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    ctx.fillStyle = "#00d4ff";
+    ctx.font = "bold 20px Segoe UI";
+    ctx.textAlign = "center";
+    ctx.fillText(txt, canvas.width / 2, canvas.height / 2);
+}
+
 async function loadLevel() {
+    isLoading = true;
     setGridConfig();
     nextBtn.style.display = "none";
     levelTitle.innerText = `LEVEL ${currentLevel + 1} / ${imageLibrary.length}`;
-    statusText.style.color = "#00d4ff";
+    statusText.innerText = "Memuat...";
     
+    // Reset tampilan canvas (Hapus gambar sebelumnya)
+    pieces = [];
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
     const imageUrl = imageLibrary[currentLevel];
 
     try {
         const response = await fetch(imageUrl);
-        if (!response.ok) throw new Error("Gagal mengambil gambar");
+        if (!response.ok) throw new Error("Gagal");
 
         const reader = response.body.getReader();
         const contentLength = +response.headers.get('Content-Length');
@@ -108,13 +122,14 @@ async function loadLevel() {
             chunks.push(value);
             receivedLength += value.length;
 
-            // Update Progress di Teks Status
+            let progressTxt = "";
             if (contentLength) {
                 let percent = Math.round((receivedLength / contentLength) * 100);
-                statusText.innerText = `Mengunduh: ${percent}%`;
+                progressTxt = `Mengunduh: ${percent}%`;
             } else {
-                statusText.innerText = `Mengunduh... (${(receivedLength / 1024).toFixed(0)} KB)`;
+                progressTxt = `Mengunduh... (${(receivedLength / 1024).toFixed(0)} KB)`;
             }
+            drawLoadingScreen(progressTxt);
         }
 
         const blob = new Blob(chunks);
@@ -122,26 +137,18 @@ async function loadLevel() {
 
         img = new Image();
         img.onload = () => {
-            statusText.innerText = "Mengacak puzzle...";
+            drawLoadingScreen("Mengacak puzzle...");
             setTimeout(() => {
+                isLoading = false;
                 initPuzzle();
                 statusText.innerText = "Geser kotak ke posisi yang benar";
                 URL.revokeObjectURL(objectURL);
-            }, 500); // Delay sedikit agar tulisan "mengacak" terlihat
+            }, 600);
         };
         img.src = objectURL;
 
     } catch (err) {
-        console.error(err);
-        statusText.innerText = "Gagal memuat gambar!";
-        statusText.style.color = "red";
-    }
-}
-
-function fullRestart() {
-    if(confirm("Apakah Anda ingin mengulang dari Level 1?")) {
-        currentLevel = 0;
-        loadLevel();
+        drawLoadingScreen("Gagal memuat gambar!");
     }
 }
 
@@ -156,7 +163,6 @@ function initPuzzle() {
     const pW = canvas.width / cols;
     const pH = canvas.height / rows;
 
-    pieces = [];
     for (let r = 0; r < rows; r++) {
         for (let c = 0; c < cols; c++) {
             pieces.push({
@@ -175,6 +181,7 @@ function initPuzzle() {
 }
 
 function draw() {
+    if (isLoading) return;
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     pieces.forEach(p => {
         ctx.save();
@@ -192,6 +199,23 @@ function draw() {
     });
 }
 
+function fullRestart() {
+    if(confirm("Apakah Anda ingin mengulang dari Level 1?")) {
+        currentLevel = 0;
+        loadLevel();
+    }
+}
+
+function nextLevel() {
+    currentLevel++;
+    if (currentLevel >= imageLibrary.length) {
+        alert("SELAMAT! Semua level telah selesai!");
+        currentLevel = 0;
+    }
+    loadLevel();
+}
+
+// Handler Input
 function getPos(e) {
     const rect = canvas.getBoundingClientRect();
     const clientX = (e.touches && e.touches[0]) ? e.touches[0].clientX : e.clientX;
@@ -200,6 +224,7 @@ function getPos(e) {
 }
 
 function onStart(e) {
+    if (isLoading) return;
     const pos = getPos(e);
     for (let i = pieces.length - 1; i >= 0; i--) {
         const p = pieces[i];
@@ -220,10 +245,8 @@ function onMove(e) {
         const pos = getPos(e);
         let tx = pos.x - offset.x;
         let ty = pos.y - offset.y;
-
         tx = Math.max(0, Math.min(tx, canvas.width - selectedPiece.w));
         ty = Math.max(0, Math.min(ty, canvas.height - selectedPiece.h));
-
         selectedPiece.x = tx;
         selectedPiece.y = ty;
         draw();
@@ -246,20 +269,11 @@ function onEnd() {
 }
 
 function checkWin() {
-    if (pieces.every(p => p.isSolved)) {
+    if (pieces.length > 0 && pieces.every(p => p.isSolved)) {
         statusText.innerText = "BERHASIL!";
         statusText.style.color = "#2ecc71";
         nextBtn.style.display = "block";
     }
-}
-
-function nextLevel() {
-    currentLevel++;
-    if (currentLevel >= imageLibrary.length) {
-        alert("SELAMAT! Semua level telah selesai!");
-        currentLevel = 0;
-    }
-    loadLevel();
 }
 
 canvas.addEventListener('mousedown', onStart);
@@ -269,7 +283,10 @@ canvas.addEventListener('touchstart', onStart, {passive: false});
 window.addEventListener('touchmove', onMove, {passive: false});
 window.addEventListener('touchend', onEnd);
 
-// Start game
+// Jalankan Pertama Kali
+// Set ukuran canvas awal agar teks loading muncul di tengah
+canvas.width = window.innerWidth - 40;
+canvas.height = window.innerHeight - 200;
 loadLevel();
 </script>
 </body>
