@@ -1,0 +1,11 @@
+{
+    "name": "Game Puzzle Kotak",
+    "short_name": "PuzzleKotak",
+    "description": "Mainkan Game Permainan Puzzle Kotak, sensasi baru permainan semua umur. Susun kembali kepingan yang berserakan.",
+    "icons": "puzzlekotak-favicon.jpg",
+    "theme_color": "#2D2D2D",
+    "background_color": "#2D2D2D",
+    "display": "standalone",
+    "start_url": "./index.html",
+    "orientation": "portrait"
+}
