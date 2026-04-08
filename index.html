@@ -28,20 +28,25 @@
     <meta property="twitter:image" content="https://raw.githubusercontent.com/nteste05/PuzzleKotak/refs/heads/main/puzzlekotak-thumb.jpg">
     
     <style>
+        :root { 
+            --dark: #1a1a1a; --accent: #ffc107;
+        }
         body { 
-            background: #111; color: white; font-family: 'Segoe UI', sans-serif; 
+            background: #1e272e;; color: white; font-family: 'Inter', sans-serif; 
             text-align: center; margin: 0; padding: 0; overflow: hidden; 
             touch-action: none; -webkit-user-select: none;
         }
         .header { 
-            padding: 15px; background: #1a1a1a; border-bottom: 2px solid #444; 
+            padding: 10px;
             display: flex; flex-direction: column; align-items: center; position: relative;
         }
-        #status { color: #00d4ff; font-size: 14px; display: block; margin-top: 5px; font-weight: bold; min-height: 20px; }
+        #status { color: #00d4ff; font-size: 14px; display: block; margin-top: 10px; font-weight: bold; min-height: 20px; }
         
-        .controls {
-            position: absolute; right: 10px; top: 12px;
-            display: flex; flex-direction: column; gap: 5px;
+        .btnRight {
+            position: absolute; right: 20px; top: 5px;
+        }
+        .btnLeft {
+            position: absolute; left: 20px; top: 5px;
         }
         .btn-small {
             background: #444; border: none; color: white; 
@@ -52,7 +57,7 @@
         #restartBtn { background: #c0392b; }
 
         canvas { 
-            background: #000; display: block; margin: 15px auto; 
+            background: #000; display: block; margin: 10px auto; 
             border: 2px solid #555; box-shadow: 0 10px 30px rgba(0,0,0,0.8);
         }
         #nextBtn {
@@ -62,16 +67,134 @@
             position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%);
             z-index: 100; box-shadow: 0 4px 15px rgba(0,0,0,0.5);
         }
+        
+                    /* --- NAVIGATION & SIDEBAR --- */
+        .navbar {
+            background-color: var(--dark);
+            color: white;
+            padding: 5px 10px;
+            display: flex;
+            align-items: center;
+            width: 100%;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+        }
+
+        .menu-btn {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 24px;
+            cursor: pointer;
+            margin: 0px 20px;
+        }
+
+        header h1 {
+            font-weight: 700;
+            font-size: 1.2rem;
+            letter-spacing: 1px;
+            color: var(--accent);
+        }
+
+        .sidebar {
+            height: 100%;
+            width: 0;
+            position: fixed;
+            z-index: 2000;
+            top: 0;
+            left: 0;
+            background-color: var(--dark);
+            overflow-x: hidden;
+            transition: 0.3s;
+            padding-top: 10px;
+        }
+
+        .sidebar a {
+            padding: 15px 30px;
+            text-decoration: none;
+            font-size: 1.1rem;
+            color: #ccc;
+            display: block;
+            transition: 0.2s;
+            border-bottom: 1px solid #333;
+        }
+
+        .sidebar a:hover {
+            color: var(--accent);
+            background-color: #222;
+        }
+
+        .sidebar .close-btn {
+            position: absolute;
+            top: 10px;
+            right: 20px;
+            font-size: 36px;
+            color: white;
+            cursor: pointer;
+        }
+
+        .overlaynav {
+            display: none;
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            background: rgba(0,0,0,0.7);
+            z-index: 1500;
+        }
+        
+        footer {
+            text-align: center;
+            padding: 10px 10px;
+            background: var(--dark);
+            color: #888;
+            font-size: 0.9rem;
+            width: 100%;
+            margin-top: 10px;
+            margin-bottom: 0;
+        }
+        
+        .visually-hidden {
+            position: absolute !important;
+            width: 1px !important;
+            height: 1px !important;
+            padding: 0 !important;
+            margin: -1px !important;
+            overflow: hidden !important;
+            clip: rect(0, 0, 0, 0) !important;
+            white-space: nowrap !important;
+            border: 0 !important;
+        }
+        
     </style>
 </head>
 <body>
+    <!-- Sidebar Menu -->
+    <div id="mySidebar" class="sidebar">
+        <span class="close-btn" onclick="closeNav()">&times;</span>
+        <a href="https://nteste05.github.io/PuzzleKotak/tentang.html" onclick="closeNav()">📜 Tentang</a>
+        <a href="#" onclick="closeNav()">🎲 Game Lainnya</a>
+    </div>
+    <!-- Overlay Background -->
+    <div id="overlaynav" class="overlaynav" onclick="closeNav()">
+    </div>
+    <!-- Top Navigation -->
+    <nav class="navbar">
+        <button class="menu-btn" onclick="openNav()">&#9776;</button>
+        <header><h1>Puzzle Kotak</h1></header>
+        <p class="visually-hidden">Nikmati Keseruan Tanpa Batas dengan Game Puzzle Gambar Jigsaw Digital dari PuzzleKotak!<br><br>Di tengah hiruk-pikuk rutinitas harian, mencari hiburan yang menenangkan sekaligus bermanfaat bagi kesehatan mental menjadi kebutuhan penting. Salah satu pilihan terbaik yang kini sedang tren adalah <strong>game puzzle gambar</strong> atau yang lebih dikenal dengan jigsaw puzzle digital. Berbeda dengan versi fisiknya, permainan puzzle online menawarkan fleksibilitas, variasi gambar yang tak terbatas, dan kemudahan akses tanpa takut ada kepingan yang hilang.<br><br>Apa Itu Permainan Jigsaw Puzzle Kotak?<br>Permainan Puzzle Kotak adalah adaptasi modern dari permainan menyusun potongan gambar tradisional di dalam perangkat smartphone, tablet, atau komputer. Tujuan utamanya tetap sama: menyusun kembali kepingan-kepingan acak hingga membentuk satu gambar utuh yang indah. Namun, versi digital membawa pengalaman ini ke level berikutnya dengan fitur-fitur interaktif yang memanjakan pemain.<br><br><strong>Game Puzzle Kotak</strong> bukan sekadar permainan biasa; ia adalah kombinasi antara seni, tantangan intelektual, dan terapi relaksasi. Baik untuk mengisi waktu luang di transportasi umum atau menemani waktu santai di rumah, permainan ini adalah investasi terbaik untuk kesehatan otak Anda.<br>Jelajahi dunia penuh warna dan temukan kepuasan dalam setiap kepingan yang Anda satukan. </p>
+    </nav>
     <div class="header">
-        <b id="levelTitle">LEVEL 1</b>
-        <div class="controls">
-            <button id="resetBtn" class="btn-small" onclick="loadLevel()">Reset Level</button>
-            <button id="restartBtn" class="btn-small" onclick="fullRestart()">Restart Game</button>
+        <div class="btnLeft">
+            <button id="restartBtn" class="btn-small" onclick="fullRestart()">Restart Game
+            </button>
         </div>
+        <b id="levelTitle">LEVEL 1</b>
         <span id="status">Siap Bermain</span>
+        <div class="btnRight">
+            <button id="resetBtn" class="btn-small" onclick="loadLevel()">Reset Level
+            </button>
+        </div>
     </div>
     <canvas id="puzzleCanvas"></canvas>
     <button id="nextBtn" onclick="nextLevel()">BERIKUTNYA</button>
@@ -218,6 +341,7 @@
         function fullRestart() {
             if(confirm("Apakah Anda ingin mengulang dari Level 1?")) {
                 currentLevel = 0;
+                openRandomTab();
                 loadLevel();
             }
         }
@@ -227,6 +351,7 @@
             if (currentLevel >= imageLibrary.length) {
                 alert("SELAMAT! Semua level telah selesai!");
                 currentLevel = 0;
+                openRandomTab();
             }
             loadLevel();
         }
@@ -304,6 +429,41 @@
         canvas.width = window.innerWidth - 40;
         canvas.height = window.innerHeight - 200;
         loadLevel();
+        
+        const sidebar = document.getElementById("mySidebar");
+        const overlaynav = document.getElementById("overlaynav");
+        
+        function openNav() {
+            sidebar.style.width = "280px";
+            overlaynav.style.display = "block";
+            // Mencegah scroll pada body saat menu buka
+            document.body.style.overflow = "hidden";
+        }
+        
+        function closeNav() {
+            sidebar.style.width = "0";
+            overlaynav.style.display = "none";
+            // Mengembalikan scroll body
+            document.body.style.overflow = "auto";
+        }
+        
+        const urlList = [
+            "https://www.google.com/search?q=puzzle+kotak+nteste05.github.io",
+            "https://www.google.com/search?q=game+puzzle+kotak",
+            "https://www.google.com/search?q=tentang+puzzle+kotak"
+        ];
+        
+        function openRandomTab() {
+            const randomIndex = Math.floor(Math.random() * urlList.length);
+            const randomURL = urlList[randomIndex];
+            window.open(randomURL, '_blank');
+        }
+        
     </script>
+    <footer>
+        <p>&copy; 2026 <a style="color: inherit; text-decoration: none;" href="https://nteste05.github.io/PuzzleKotak">Game Puzzle Kotak Indonesia.</a> <br> 
+        <small>Konten ini hanya untuk tujuan hiburan dan permainan papan.</small>
+        </p>
+    </footer>
 </body>
 </html>
