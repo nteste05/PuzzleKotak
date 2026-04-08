@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="google-site-verification" content="BAd-zdFJlXX_E8iBdykuYgBulskwqwHhFDZjSKlN87I" />
+    <link rel="canonical" href="https://nteste05.github.io/PuzzleKotak/tentang.html" />
+    <link rel="icon" type="image/jpg" href="puzzlekotak-favicon.jpg" sizes="32x32">
+    <link rel="apple-touch-icon" sizes="180x180" href="puzzlekotak-favicon.jpg">
+    <link href="https://googleapis.com" rel="stylesheet">
+    <link rel="manifest" href="manifest.json">
+    
+    <title>Tentang Game Permainan PuzzleKotak</title>
+    <meta name="description" content="Mainkan Game Puzzle Gambar Jigsaw Digital dari PuzzleKotak! Tingkat kesulitan variatif, dan mode offline. Asah otak jadi lebih seru">
+    <meta name="keywords" content="Puzzle Gambar, Jigsaw Digital, Game Asah Otak, Puzzle Online, PuzzleKotak">
+    <meta name="robots" content="index, follow">
+    <meta name="author" content="PuzzleKotak">
+    
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://nteste05.github.io/PuzzleKotak/tentang.html">
+    <meta property="og:title" content="Tentang Game Permainan PuzzleKotak">
+    <meta property="og:description" content="Mainkan Game Puzzle Gambar Jigsaw Digital dari PuzzleKotak! Tingkat kesulitan variatif, dan mode offline. Asah otak jadi lebih seru">
+    <meta property="og:image" content="https://raw.githubusercontent.com/nteste05/PuzzleKotak/refs/heads/main/puzzlekotak-thumb.jpg">
+    
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://nteste05.github.io/PuzzleKotak/tentang.html">
+    <meta property="twitter:title" content="Tentang Game Permainan PuzzleKotak">
+    <meta property="twitter:description" content="Mainkan Game Puzzle Gambar Jigsaw Digital dari PuzzleKotak! Tingkat kesulitan variatif, dan mode offline. Asah otak jadi lebih seru">
+    <meta property="twitter:image" content="https://raw.githubusercontent.com/nteste05/PuzzleKotak/refs/heads/main/puzzlekotak-thumb.jpg">
+    
+    <style>
+        :root {
+            --primary: #d32f2f; /* Merah Rungkad */
+            --dark: #1a1a1a;
+            --light: #f9f9f9;
+            --text: #333;
+            --accent: #ffc107;
+        }
+
+        * {
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            margin: 0;
+            padding: 0;
+            line-height: 1.6;
+            background-color: var(--light);
+            color: var(--text);
+            scroll-behavior: smooth;
+        }
+
+        /* --- NAVIGATION & SIDEBAR --- */
+        .navbar {
+            background-color: var(--dark);
+            color: white;
+            padding: 15px 20px;
+            display: flex;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+        }
+
+        .menu-btn {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 24px;
+            cursor: pointer;
+            margin-right: 15px;
+        }
+
+        .logo {
+            font-weight: 700;
+            font-size: 1.2rem;
+            letter-spacing: 1px;
+            color: var(--accent);
+        }
+
+        .sidebar {
+            height: 100%;
+            width: 0;
+            position: fixed;
+            z-index: 2000;
+            top: 0;
+            left: 0;
+            background-color: var(--dark);
+            overflow-x: hidden;
+            transition: 0.3s;
+            padding-top: 60px;
+        }
+
+        .sidebar a {
+            padding: 15px 30px;
+            text-decoration: none;
+            font-size: 1.1rem;
+            color: #ccc;
+            display: block;
+            transition: 0.2s;
+            border-bottom: 1px solid #333;
+        }
+
+        .sidebar a:hover {
+            color: var(--accent);
+            background-color: #222;
+        }
+
+        .sidebar .close-btn {
+            position: absolute;
+            top: 10px;
+            right: 20px;
+            font-size: 36px;
+            color: white;
+            cursor: pointer;
+        }
+
+        .overlaynav {
+            display: none;
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            background: rgba(0,0,0,0.7);
+            z-index: 1500;
+        }
+
+        /* --- HERO SECTION --- */
+        header {
+            background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), 
+                        url('https://raw.githubusercontent.com/nteste05/PuzzleKotak/refs/heads/main/puzzlekotak-thumb.jpg');
+            background-size: 180% auto;
+            background-repeat: no-repeat;
+            background-position: center top;
+            background-attachment: fixed;
+            color: white;
+            padding: 60px 20px;
+            text-align: center;
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 2.5rem;
+            text-transform: uppercase;
+        }
+
+        /* --- MAIN CONTENT --- */
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        section {
+            background: white;
+            padding: 30px;
+            margin-bottom: 25px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+        }
+
+        h2 {
+            color: var(--primary);
+            border-left: 5px solid var(--primary);
+            padding-left: 15px;
+            margin-bottom: 20px;
+        }
+
+        footer {
+            text-align: center;
+            padding: 40px 20px;
+            background: var(--dark);
+            color: #888;
+            font-size: 0.9rem;
+        }
+
+        /* --- RESPONSIVE --- */
+        @media (max-width: 600px) {
+            header h1 { font-size: 1.2rem; }
+            section { padding: 20px; }
+            .logo { font-size: 1rem; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- Sidebar Menu -->
+<div id="mySidebar" class="sidebar">
+    <span class="close-btn" onclick="closeNav()">&times;</span>
+    <a href="https://nteste05.github.io/PuzzleKotak/tentang.html" onclick="closeNav()">📜 Tentang</a>
+    <a href="#mainkan" onclick="closeNav()">🎲 Mainkan</a>
+</div>
+
+<!-- Overlay Background -->
+<div id="overlaynav" class="overlaynav" onclick="closeNav()"></div>
+
+<!-- Top Navigation -->
+<nav class="navbar">
+    <button class="menu-btn" onclick="openNav()">&#9776;</button>
+    <div class="logo">PUZZLE KOTAK</div>
+</nav>
+
+<header>
+    <h1>Nikmati Keseruan Tanpa Batas dengan Game Puzzle Gambar Jigsaw Digital dari PuzzleKotak</h1>
+</header>
+
+<div class="container">
+    
+    <!-- Section: Artikel -->
+    <section id="artikel">
+        <p>Di tengah hiruk-pikuk rutinitas harian, mencari hiburan yang menenangkan sekaligus bermanfaat bagi kesehatan mental menjadi kebutuhan penting. Salah satu pilihan terbaik yang kini sedang tren adalah <strong>game puzzle gambar</strong> atau yang lebih dikenal dengan <em>jigsaw puzzle</em> digital. Berbeda dengan versi fisiknya, permainan puzzle online menawarkan fleksibilitas, variasi gambar yang tak terbatas, dan kemudahan akses tanpa takut ada kepingan yang hilang.</p>
+        <h2>Apa Itu Permainan Jigsaw Puzzle Kotak?</h2>
+        <p>Permainan Puzzle Kotak adalah adaptasi modern dari permainan menyusun potongan gambar tradisional di dalam perangkat <em>smartphone</em>, tablet, atau komputer. Tujuan utamanya tetap sama: menyusun kembali kepingan-kepingan acak hingga membentuk satu gambar utuh yang indah. Namun, versi digital membawa pengalaman ini ke level berikutnya dengan fitur-fitur interaktif yang memanjakan pemain.</p>
+        <p><strong>Game Puzzle Kotak</strong>  bukan sekadar permainan biasa; ia adalah kombinasi antara seni, tantangan intelektual, dan terapi relaksasi. Baik untuk mengisi waktu luang di transportasi umum atau menemani waktu santai di rumah, permainan ini adalah investasi terbaik untuk kesehatan otak Anda.<br>Jelajahi dunia penuh warna dan temukan kepuasan dalam setiap kepingan yang Anda satukan.
+        </p>
+        <p>PuzzleKotak berkomitmen memberikan pengalaman bermain game puzzle terbaik di Indonesia. Kami menggabungkan elemen tradisional dengan teknologi digital modern untuk menciptakan platform yang edukatif sekaligus menghibur bagi seluruh anggota keluarga, mulai dari anak-anak hingga orang dewasa.</p>
+    </section>
+    
+    <!-- Section: Mainkan -->
+    <section id="mainkan" style="text-align: center;">
+        <h2>Siap Untuk Bermain?</h2>
+        <p>Jangan lewatkan keseruan menyatukan potongan-potongan indah menjadi karya seni yang utuh.</p>
+        <button id="Btn" style="background: var(--primary); color: white; border: none; padding: 10px 25px; border-radius: 5px; font-weight: bold; cursor: pointer;">Mainkan Sekarang</button>
+    </section>
+
+</div>
+
+<footer>
+    <p>&copy; 2026 <a style="color: inherit; text-decoration: none;" href="https://nteste05.github.io/PuzzleKotak/">Game PuzzleKotak Terbaik.</a> <br> 
+    <small>Konten ini hanya untuk tujuan hiburan dan permainan papan.</small></p>
+</footer>
+
+<!-- JavaScript for Sidebar -->
+<script>
+    const sidebar = document.getElementById("mySidebar");
+    const overlaynav = document.getElementById("overlaynav");
+
+    function openNav() {
+        sidebar.style.width = "280px";
+        overlaynav.style.display = "block";
+        // Mencegah scroll pada body saat menu buka
+        document.body.style.overflow = "hidden";
+    }
+
+    function closeNav() {
+        sidebar.style.width = "0";
+        overlaynav.style.display = "none";
+        // Mengembalikan scroll body
+        document.body.style.overflow = "auto";
+    }
+
+    const urlList = [
+            "https://www.google.com/search?q=puzzle+kotak+nteste05.github.io",
+            "https://www.google.com/search?q=game+puzzle+kotak+nteste05.github.io",
+            "https://www.google.com/search?q=tentang+puzzle+kotak+nteste05.github.io"
+    ];
+    
+    function openRandomTab() {
+            const randomIndex = Math.floor(Math.random() * urlList.length);
+            const randomURL = urlList[randomIndex];
+            window.open(randomURL, '_blank');
+    }
+    
+    const Btn = document.getElementById('Btn');
+    
+    Btn.onclick = () => {
+        openRandomTab();
+        window.location.href='https://nteste05.github.io/PuzzleKotak/';
+    }
+    
+</script>
+
+</body>
+</html>
